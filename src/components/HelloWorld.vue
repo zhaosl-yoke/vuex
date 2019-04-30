@@ -1,83 +1,42 @@
 <template>
   <div class="hello">
-    <!-- <h3>{{ $store.state.count }}</h3>
-    <p>{{count}}</p>
-    <p>{{num}}</p> -->
-    <!-- <p>{{count}}</p> -->
-    <!-- <h3>{{add}}</h3>
-    <h3>{{$store.getters.add}}</h3>
-    <h3>{{counted}}</h3> -->
-    <h3>{{num}}</h3>
-    <!-- <div>
-      方式1
-      <button @click="$store.commit('add')">增加</button>
-      <button @click="$store.commit('reduce')">减少</button>
-    </div>
-    
-    <div>
-      方式2
-      <button @click="add(10)">增加</button>
-      <button @click="reduce">减少</button>
-    </div> -->
-    <!-- <div>
-      方式1
-      <button @click="$store.commit('add',{amount:10,'text':'增加10'})">增加</button>
-      <button @click="$store.commit('reduce')">减少</button>
-    </div>
-    
-    <div>
-      方式2
-      <button @click="add({amount:10,'text':'增加10'})">增加</button>
-      <button @click="reduce">减少</button>
-    </div> -->
-    <div>
-      <button @click="$store.dispatch('reduceAction')">减少</button>
-      <button @click="addAction">增加</button>
-    </div>
+    hello world{{param}}
+    <router-link to="/helloworld/123">Go To HelloWorld123</router-link>
+    <router-link to="/helloworld/456">Go To HelloWorld456</router-link>
   </div>
 </template>
 
 <script>
-import { mapState,mapGetters,mapMutations,mapActions } from 'vuex'
 export default {
   name: 'HelloWorld',
+  //props:['id'],
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      param:''
     }
   },
-  // computed: {
-  //   count() {
-  //     return this.$store.state.count
-  //   }
+  mounted() {
+    console.log(this.$route.params.id);
+    this.param = this.$route.params.id
+    //console.log(this.id)
+  },
+  //方式一：导航守卫
+  // beforeRouteUpdate(to,from,next){
+  //   //具体逻辑代码
+  //   console.log('Update');
+  //   next();
   // },
-  //形式1
-  // computed: mapState({
-  //   count:state=>state.count,
-  //   num:state=>state.num
-  // })
-  //形式2
-  // computed: {
-  //   ...mapState({
-  //     count:state=>state.count,
-  //     num:state=>state.num
-  //   })
-  // }
-  // computed: {
-  //   ...mapGetters(['add']),
-  //   counted() {
-  //     return this.$store.getters.add
-  //   }
-  // },
-  computed: {
-    ...mapState(['num','text']),
+  //方式二：wacth（检测变化）
+  watch:{
+    $route(to,from){
+      console.log('路由参数变化');
+      //具体逻辑代码
+    }
   },
   methods: {
-    //...mapMutations(['add','reduce'])
-    ...mapActions(['addAction'])
+    
   },
-  //或者用这种方式
-  //methods:mapMutations(['add','reduce'])
 }
 </script>
 
